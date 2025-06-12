@@ -148,6 +148,17 @@ async function fetchAlerts() {
     }
 }
 
+// 輔助：多次嘗試抓取警報資料
+async function fetchAlertsWithRetry(retries = 3, delay = 1000) {
+    for (let i = 0; i < retries; i++) {
+        const alerts = await fetchAlerts();
+        if (alerts && alerts.length > 0) return alerts;
+        await new Promise(res => setTimeout(res, delay));
+    }
+    // 最後一次還是失敗就回傳空陣列
+    return [];
+}
+
 // 渲染警報列表
 function renderAlerts(alerts) {
     if (!Array.isArray(alerts)) alerts = [];
@@ -297,11 +308,21 @@ async function initApp() {
     if (document.querySelector('.dashboard-header .clock .time')) {
         startClock();
     }
-    // 取得並顯示警報
-    const alerts = await fetchAlerts();
+    // 取得並顯示警報（多次嘗試）
+    const alerts = await fetchAlertsWithRetry();
     renderAlerts(alerts);
     updateTicker(alerts);
     updateStats(alerts);
+    // 設置自動更新（每分鐘）
+    if (localStorage.getItem('auto-update') !== 'false') {
+        if (window.__alertUpdateTimer) clearInterval(window.__alertUpdateTimer);
+        window.__alertUpdateTimer = setInterval(async () => {
+            const newAlerts = await fetchAlertsWithRetry();
+            renderAlerts(newAlerts);
+            updateTicker(newAlerts);
+            updateStats(newAlerts);
+        }, 60000); // 1分鐘
+    }
     loadSettings();
     const settings = {
         'earthquake-notification': true,
