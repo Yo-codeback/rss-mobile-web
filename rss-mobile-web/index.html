@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>國家級警報</title>
+    <meta name="description" content="即時接收國家級警報通知">
+    <meta name="theme-color" content="#16213e">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 主界面 -->
+    <div class="app-container">
+        <!-- 頂部標題欄 -->
+        <header class="header">
+            <h1>國家級警報</h1>
+        </header>
+
+        <!-- 警報列表 -->
+        <main class="alert-list">
+            <div class="alert-item">
+                <div class="alert-icon">⚠️</div>
+                <div class="alert-content">
+                    <h3>地震警報</h3>
+                    <p class="alert-time">2024-03-21 14:30</p>
+                    <p class="alert-summary">花蓮縣發生芮氏規模6.0地震，請注意安全。</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- 底部導航欄 -->
+        <nav class="bottom-nav">
+            <div class="nav-item active">
+                <span class="nav-icon">📢</span>
+                <span class="nav-text">警報</span>
+            </div>
+            <div class="nav-item">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-text">設定</span>
+            </div>
+        </nav>
+    </div>
+
+    <!-- 警報詳情頁面 -->
+    <div class="alert-detail hidden">
+        <header class="detail-header">
+            <button class="back-button">←</button>
+            <h2>警報詳情</h2>
+        </header>
+        <main class="detail-content">
+            <div class="detail-alert">
+                <h3>地震警報</h3>
+                <p class="detail-time">2024-03-21 14:30</p>
+                <div class="detail-info">
+                    <p>發生地點：花蓮縣</p>
+                    <p>地震規模：6.0</p>
+                    <p>震源深度：10公里</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 設定頁面 -->
+    <div class="settings-page hidden">
+        <header class="detail-header">
+            <button class="back-button">←</button>
+            <h2>設定</h2>
+        </header>
+        <main class="settings-content">
+            <div class="settings-group">
+                <h3>通知設定</h3>
+                <div class="setting-item">
+                    <span>地震警報</span>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <span>颱風警報</span>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <span>海嘯警報</span>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="settings-group">
+                <h3>應用程式設定</h3>
+                <div class="setting-item">
+                    <span>深色模式</span>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <span>自動更新</span>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // 註冊 Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker 註冊成功:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker 註冊失敗:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html> 

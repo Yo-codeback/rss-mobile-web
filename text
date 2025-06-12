@@ -1,0 +1,210 @@
+這是正式的api @https://cbs.tw/files/rssatomfeed.xml 
+
+格式（只抓前五個）
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:cap="urn:oasis:names:tc:emergency:cap:1.1" xmlns:georss="http://www.georss.org/georss">
+<id>https://alerts.ncdr.nat.gov.tw/RSS.aspx</id>
+<title>NCDR_CAP-</title>
+<link rel="self" href="https://cbs.tw/download/rssatomfeed.xml"/>
+<updated>2025-06-12T14:35:20+08:00</updated>
+<author>
+<name>NCDR</name>
+</author>
+<entry>
+<id>A2025061214340696039732800</id>
+<title>疏散避難</title>
+<sent>2025-06-12T14:35:01+08:00</sent>
+<expires>2025-06-12T14:50:31+08:00</expires>
+<sender>
+<value>金門縣消防局</value>
+</sender>
+<status>Actual</status>
+<msgType>Alert</msgType>
+<eventCode>
+<value>evacuation</value>
+</eventCode>
+<area>
+<areaDesc>發布區域1</areaDesc>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>0902001</value>
+</geocode>
+</area>
+<channel>
+<value>4371</value>
+</channel>
+<link rel="alternate" href="https://cbs.tw/25063cdd05a9"/>
+<text>[演練][疏散避難警報] 2025年金門縣城鎮韌性演習疏散警報發送演練。金門縣災害應變中心082-373795#0。[Evacuation Drill] Kinmen County EOC 082-373795 Ext 0.金門縣政府082-324021關心您</text>
+<description type="html">
+<![CDATA[ [演練][疏散避難警報] 2025年金門縣城鎮韌性演習疏散警報發送演練。金門縣災害應變中心082-373795#0。[Evacuation Drill] Kinmen County EOC 082-373795 Ext 0.金門縣政府082-324021關心您 ]]>
+</description>
+</entry>
+<entry>
+<id>ardswc.gov.tw_debrisFlowLandSlide_20250611223300_30</id>
+<title>土石流</title>
+<sent>2025-06-11T22:41:17+08:00</sent>
+<expires>2025-06-12T04:33:00+08:00</expires>
+<sender>
+<value>農業部農村發展及水土保持署</value>
+</sender>
+<status>Actual</status>
+<msgType>Alert</msgType>
+<eventCode>
+<value>debrisFlow</value>
+</eventCode>
+<area>
+<areaDesc>臺東縣金峰鄉</areaDesc>
+<circle>22.635876,121.001082 2.0</circle>
+</area>
+<channel>
+<value>911</value>
+</channel>
+<link rel="alternate" href="https://cbs.tw/25063cdd05a5"/>
+<text>[土石流及大規模崩塌][二次災害高風險區提醒]臺東縣金峰鄉新興村豐收橋、太麻里鄉大王村沙崙溪之1小時累積雨量23.5mm已達注意值，請提高警覺，農業部農村水保署0800_246246。[Warning]Rainfall has reached the cautionary threshold. https://gov.tw/96k</text>
+<description type="html">
+<![CDATA[ [土石流及大規模崩塌][二次災害高風險區提醒]臺東縣金峰鄉新興村豐收橋、太麻里鄉大王村沙崙溪之1小時累積雨量23.5mm已達注意值，請提高警覺，農業部農村水保署0800_246246。[Warning]Rainfall has reached the cautionary threshold. https://gov.tw/96k ]]>
+</description>
+</entry>
+<entry>
+<id>ardswc.gov.tw_debrisFlowLandSlide_20250611221300_32</id>
+<title>土石流</title>
+<sent>2025-06-11T22:21:17+08:00</sent>
+<expires>2025-06-12T04:13:00+08:00</expires>
+<sender>
+<value>農業部農村發展及水土保持署</value>
+</sender>
+<status>Actual</status>
+<msgType>Alert</msgType>
+<eventCode>
+<value>debrisFlow</value>
+</eventCode>
+<area>
+<areaDesc>臺東縣太麻里鄉</areaDesc>
+<circle>22.649535,121.019665 1.5</circle>
+</area>
+<channel>
+<value>911</value>
+</channel>
+<link rel="alternate" href="https://cbs.tw/25063cdd05a1"/>
+<text>[土石流及大規模崩塌][二次災害高風險區提醒]臺東縣太麻里鄉華源村南北坑之1小時累積雨量21.5mm已達注意值，請提高警覺，農業部農村水保署0800_246246。[Warning]Rainfall has reached the cautionary threshold. https://gov.tw/vLp</text>
+<description type="html">
+<![CDATA[ [土石流及大規模崩塌][二次災害高風險區提醒]臺東縣太麻里鄉華源村南北坑之1小時累積雨量21.5mm已達注意值，請提高警覺，農業部農村水保署0800_246246。[Warning]Rainfall has reached the cautionary threshold. https://gov.tw/vLp ]]>
+</description>
+</entry>
+<entry>
+<id>cwa.gov.tw_earthquakeEW_114090313</id>
+<title>地震速報</title>
+<sent>2025-06-11T19:01:00+08:00</sent>
+<expires>2025-06-11T19:03:58+08:00</expires>
+<sender>
+<value>中央氣象署</value>
+</sender>
+<status>Actual</status>
+<msgType>Alert</msgType>
+<eventCode>
+<value>earthquakeEW</value>
+</eventCode>
+<area>
+<areaDesc>地震速報廣播範圍</areaDesc>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>09007</value>
+</geocode>
+</area>
+<channel>
+<value>4370</value>
+</channel>
+<link rel="alternate" href="https://cbs.tw/25063cdd059d"/>
+<text>[地震速報 Earthquake Alert]06/11 19:00左右花東地區發生顯著有感地震，慎防強烈搖晃，就近避難「趴下、掩護、穩住」，氣象署。Felt earthquake alert. Keep calm and seek cover nearby. CWA 02_2349 1181 避難宣導：https://gov.tw/KNs</text>
+<description type="html">
+<![CDATA[ [地震速報 Earthquake Alert]06/11 19:00左右花東地區發生顯著有感地震，慎防強烈搖晃，就近避難「趴下、掩護、穩住」，氣象署。Felt earthquake alert. Keep calm and seek cover nearby. CWA 02_2349 1181 避難宣導：https://gov.tw/KNs ]]>
+</description>
+</entry>
+<entry>
+<id>cwa.gov.tw_earthquakeEW_114090302</id>
+<title>地震速報</title>
+<sent>2025-06-11T19:00:43+08:00</sent>
+<expires>2025-06-11T19:03:42+08:00</expires>
+<sender>
+<value>中央氣象署</value>
+</sender>
+<status>Actual</status>
+<msgType>Alert</msgType>
+<eventCode>
+<value>earthquakeEW</value>
+</eventCode>
+<area>
+<areaDesc>地震速報廣播範圍</areaDesc>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>63</value>
+</geocode>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>10017</value>
+</geocode>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>65</value>
+</geocode>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>68</value>
+</geocode>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>10018</value>
+</geocode>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>10004</value>
+</geocode>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>10005</value>
+</geocode>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>66</value>
+</geocode>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>10007</value>
+</geocode>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>10009</value>
+</geocode>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>10020</value>
+</geocode>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>67</value>
+</geocode>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>64</value>
+</geocode>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>10013</value>
+</geocode>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>10002</value>
+</geocode>
+<geocode>
+<valueName>Taiwan_Geocode_103</valueName>
+<value>10016</value>
+</geocode>
+</area>
+<channel>
+<value>4370</value>
+</channel>
+<link rel="alternate" href="https://cbs.tw/25063cdd0599"/>
+<text>[地震速報 Earthquake Alert]06/11 19:00左右花東地區發生顯著有感地震，慎防強烈搖晃，就近避難「趴下、掩護、穩住」，氣象署。Felt earthquake alert. Keep calm and seek cover nearby. CWA 02_2349 1181 避難宣導：https://gov.tw/KNs</text>
+<description type="html">
+<![CDATA[ [地震速報 Earthquake Alert]06/11 19:00左右花東地區發生顯著有感地震，慎防強烈搖晃，就近避難「趴下、掩護、穩住」，氣象署。Felt earthquake alert. Keep calm and seek cover nearby. CWA 02_2349 1181 避難宣導：https://gov.tw/KNs ]]>
+</description>
+</entry>
