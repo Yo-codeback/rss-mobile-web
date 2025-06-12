@@ -18,30 +18,43 @@ const alertIcons = {
     'default': '⚠️'
 };
 
-// 更新時鐘
-function updateClock() {
-    const now = new Date();
-    const timeElement = document.querySelector('.clock .time');
-    const dateElement = document.querySelector('.clock .date');
-    
-    // 格式化時間
-    const time = now.toLocaleTimeString('zh-TW', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-    });
-    
-    // 格式化日期
-    const date = now.toLocaleDateString('zh-TW', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        weekday: 'long'
-    });
-    
-    timeElement.textContent = time;
-    dateElement.textContent = date;
+// 時鐘自動更新（只在 dashboard 存在時啟動）
+function startClock() {
+    function updateClock() {
+        const now = new Date();
+        const timeElement = document.querySelector('.dashboard-header .clock .time');
+        const dateElement = document.querySelector('.dashboard-header .clock .date');
+        if (timeElement && dateElement) {
+            const time = now.toLocaleTimeString('zh-TW', {
+                hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+            });
+            const date = now.toLocaleDateString('zh-TW', {
+                year: 'numeric', month: 'long', day: 'numeric', weekday: 'long'
+            });
+            timeElement.textContent = time;
+            dateElement.textContent = date;
+        }
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+}
+
+// 顯示錯誤訊息
+function showError(message) {
+    // 優先顯示在 dashboard 或 app alert-list 上方
+    let container = document.querySelector('.dashboard-container .alerts-section') || document.querySelector('.app-container');
+    if (!container) return;
+    let errorDiv = document.querySelector('.error-message');
+    if (!errorDiv) {
+        errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        container.prepend(errorDiv);
+    }
+    errorDiv.textContent = message;
+}
+function clearError() {
+    let errorDiv = document.querySelector('.error-message');
+    if (errorDiv) errorDiv.remove();
 }
 
 // 更新跑馬燈
@@ -90,38 +103,31 @@ function updateStats(alerts) {
 // 獲取警報數據
 async function fetchAlerts() {
     try {
-        // 讀取CORS代理設定
         const useProxy = localStorage.getItem('cors-proxy') === 'true';
         const proxy = 'https://cors-anywhere.herokuapp.com/';
         const url = 'https://cbs.tw/files/rssatomfeed.xml';
         const fetchUrl = useProxy ? proxy + url : url;
         const response = await fetch(fetchUrl);
+        if (!response.ok) throw new Error('伺服器回應錯誤');
         const xmlText = await response.text();
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
-        
         const entries = xmlDoc.getElementsByTagName('entry');
         const alerts = [];
-        
         for (let entry of entries) {
             const title = entry.getElementsByTagName('title')[0].textContent;
             const time = entry.getElementsByTagName('published')[0].textContent;
             const text = entry.getElementsByTagName('content')[0].textContent;
             const link = entry.getElementsByTagName('link')[0].getAttribute('href');
-            
-            // 解析警報類型
             let type = 'default';
             if (title.includes('地震')) type = '地震';
             else if (title.includes('颱風')) type = '颱風';
             else if (title.includes('海嘯')) type = '海嘯';
-            
-            // 解析地區和發送者
             const areaMatch = text.match(/地區：([^<]+)/);
             const senderMatch = text.match(/發送者：([^<]+)/);
-            
             alerts.push({
                 title,
-                time: new Date(time).toLocaleString('zh-TW'),
+                time: new Date(time),
                 text,
                 link,
                 type,
@@ -129,10 +135,15 @@ async function fetchAlerts() {
                 sender: senderMatch ? senderMatch[1] : '未知發送者'
             });
         }
-        
-        return alerts;
+        alerts.sort((a, b) => b.time - a.time);
+        const latestFive = alerts.slice(0, 5).map(alert => ({
+            ...alert,
+            time: alert.time.toLocaleString('zh-TW')
+        }));
+        clearError();
+        return latestFive;
     } catch (error) {
-        console.error('獲取警報失敗:', error);
+        showError('警報資料載入失敗，請稍後再試！\n' + error.message);
         return [];
     }
 }
@@ -283,9 +294,17 @@ function loadSettings() {
     });
 }
 
-// 初始化
-document.addEventListener('DOMContentLoaded', () => {
-    renderAlerts();
+// 初始化應用
+async function initApp() {
+    // 啟動時鐘（只在 dashboard 存在時）
+    if (document.querySelector('.dashboard-header .clock .time')) {
+        startClock();
+    }
+    // 取得並顯示警報
+    const alerts = await fetchAlerts();
+    renderAlerts(alerts);
+    updateTicker(alerts);
+    updateStats(alerts);
     loadSettings();
     const settings = {
         'earthquake-notification': true,
@@ -313,4 +332,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+}
+
+// 初始化
+document.addEventListener('DOMContentLoaded', () => {
+    initApp();
 }); 
