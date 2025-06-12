@@ -90,7 +90,12 @@ function updateStats(alerts) {
 // 獲取警報數據
 async function fetchAlerts() {
     try {
-        const response = await fetch('https://cbs.tw/files/rssatomfeed.xml');
+        // 讀取CORS代理設定
+        const useProxy = localStorage.getItem('cors-proxy') === 'true';
+        const proxy = 'https://cors-anywhere.herokuapp.com/';
+        const url = 'https://cbs.tw/files/rssatomfeed.xml';
+        const fetchUrl = useProxy ? proxy + url : url;
+        const response = await fetch(fetchUrl);
         const xmlText = await response.text();
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
@@ -282,4 +287,30 @@ function loadSettings() {
 document.addEventListener('DOMContentLoaded', () => {
     renderAlerts();
     loadSettings();
+    const settings = {
+        'earthquake-notification': true,
+        'typhoon-notification': true,
+        'tsunami-notification': true,
+        'dark-mode': true,
+        'auto-update': true,
+        'cors-proxy': false
+    };
+    Object.keys(settings).forEach(key => {
+        const checkbox = document.getElementById(key);
+        if (checkbox) {
+            checkbox.checked = localStorage.getItem(key) !== 'false';
+            checkbox.addEventListener('change', () => {
+                localStorage.setItem(key, checkbox.checked);
+                if (key === 'auto-update') {
+                    if (checkbox.checked) {
+                        initApp();
+                    }
+                }
+                if (key === 'cors-proxy') {
+                    // 立即重新抓取警報
+                    initApp();
+                }
+            });
+        }
+    });
 }); 
