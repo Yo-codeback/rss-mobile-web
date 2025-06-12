@@ -1,0 +1,10 @@
+{
+  "appId": "com.rssmobileapp.com",
+  "appName": "\u0016\u0016rss-mobile-cap",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false
+    }
+  }
+}

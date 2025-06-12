@@ -1,0 +1,629 @@
+/* 全局樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-bg: #1e1e2e;
+    --secondary-bg: rgba(49, 50, 68, 0.7);
+    --accent-color: #89b4fa;
+    --text-primary: #cdd6f4;
+    --text-secondary: #a6adc8;
+    --alert-color: #f38ba8;
+    --success-color: #a6e3a1;
+    --warning-color: #fab387;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: linear-gradient(135deg, #1e1e2e 0%, #313244 100%);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* 應用容器 */
+.app-container {
+    max-width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 80px; /* 預留底部導航高度，避免內容被遮住 */
+}
+
+/* 頂部標題欄 */
+.header {
+    background: var(--secondary-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 1rem;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--glass-shadow);
+    border-bottom: var(--glass-border);
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+/* 警報列表 */
+.alert-list {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.alert-item {
+    background: var(--secondary-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+
+.alert-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+    border-color: var(--accent-color);
+}
+
+.alert-icon {
+    font-size: 2rem;
+    min-width: 2rem;
+    text-align: center;
+}
+
+.alert-content {
+    flex: 1;
+}
+
+.alert-content h3 {
+    margin-bottom: 0.5rem;
+    color: var(--alert-color);
+}
+
+.alert-time {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.alert-summary {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+    color: var(--text-primary);
+}
+
+.alert-area, .alert-sender {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+/* 底部導航欄 */
+.bottom-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    background: var(--secondary-bg);
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+    box-shadow: var(--glass-shadow);
+    border-top: var(--glass-border);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.nav-item.active {
+    color: var(--accent-color);
+}
+
+.nav-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.nav-text {
+    font-size: 0.8rem;
+}
+
+/* 警報詳情頁面 */
+.alert-detail, .settings-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(30, 30, 46, 0.95) 0%, rgba(49, 50, 68, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.alert-detail.hidden, .settings-page.hidden {
+    display: none;
+}
+
+.detail-header {
+    background: var(--secondary-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+
+.back-button, .settings-back-button {
+    background: none;
+    border: none;
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.back-button:hover, .settings-back-button:hover {
+    color: var(--text-primary);
+}
+
+.detail-content {
+    padding: 1rem;
+}
+
+.detail-alert h3 {
+    color: var(--alert-color);
+    margin-bottom: 1rem;
+}
+
+.detail-time {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.detail-info {
+    background: var(--secondary-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 1.2rem;
+    border-radius: 16px;
+    margin-bottom: 1rem;
+    border: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+
+.detail-info p {
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+/* 設定頁面樣式 */
+.settings-content {
+    padding: 1rem;
+}
+
+.settings-group {
+    background: var(--secondary-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    border: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+
+.settings-group h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.setting-item:last-child {
+    border-bottom: none;
+}
+
+.setting-item span {
+    color: var(--text-primary);
+}
+
+/* 開關按鈕樣式 */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(166, 173, 200, 0.3);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: .4s;
+    border-radius: 24px;
+    border: var(--glass-border);
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background: var(--text-primary);
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .slider {
+    background-color: var(--accent-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* 載入動畫 */
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    background: var(--secondary-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    margin: 1rem;
+    border: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+
+.loading::after {
+    content: "載入中...";
+    animation: loading 1s infinite;
+}
+
+@keyframes loading {
+    0% { content: "載入中.  "; }
+    33% { content: "載入中.. "; }
+    66% { content: "載入中..."; }
+}
+
+/* 錯誤提示 */
+.error-message {
+    background: rgba(243, 139, 168, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--primary-bg);
+    padding: 1.2rem;
+    margin: 1rem;
+    border-radius: 16px;
+    text-align: center;
+    border: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 1.2rem;
+    }
+
+    .alert-item {
+        padding: 1rem;
+    }
+
+    .alert-icon {
+        font-size: 1.5rem;
+    }
+
+    .alert-summary {
+        font-size: 0.9rem;
+    }
+}
+
+/* 儀表板佈局 */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: var(--secondary-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+
+.clock-container {
+    display: flex;
+    align-items: center;
+}
+
+.clock {
+    text-align: center;
+}
+
+.clock .time {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.clock .date {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.ticker-container {
+    flex: 1;
+    margin: 0 2rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.ticker-wrapper {
+    width: 100%;
+    overflow: hidden;
+}
+
+.ticker-content {
+    display: inline-block;
+    white-space: nowrap;
+    padding-left: 100%;
+    animation: ticker 30s linear infinite;
+}
+
+@keyframes ticker {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.dashboard-content {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    height: calc(100vh - 180px);
+}
+
+.alerts-section {
+    flex: 2;
+    min-width: 0;
+}
+
+.stats-section {
+    flex: 1;
+    min-width: 300px;
+}
+
+.section-header {
+    margin-bottom: 1rem;
+}
+
+.section-header h2 {
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.stat-card {
+    background: var(--secondary-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.stat-icon {
+    font-size: 2rem;
+}
+
+.stat-info {
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* 響應式設計 */
+@media (max-width: 1024px) {
+    .dashboard-content {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .stats-section {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-header {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .clock-container {
+        margin-bottom: 1rem;
+    }
+
+    .ticker-container {
+        margin: 0;
+        width: 100%;
+    }
+
+    .dashboard-content {
+        padding: 1rem;
+    }
+
+    .clock .time {
+        font-size: 2rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 隱藏移動版底部導航欄在桌面版 */
+@media (min-width: 769px) {
+    .bottom-nav {
+        display: none;
+    }
+}
+
+/* 桌面/手機版顯示切換 */
+.dashboard-container { display: none; }
+.app-container { display: block; }
+@media (min-width: 1025px) {
+  .dashboard-container { display: block; }
+  .app-container { display: none; }
+}
+
+/* Dashboard 時鐘加大 */
+.dashboard-header .clock .time {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: var(--accent-color);
+  letter-spacing: 0.1em;
+  text-shadow: 0 4px 16px rgba(0,0,0,0.25);
+}
+.dashboard-header .clock .date {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+/* 讓 dashboard-content 更寬敞 */
+.dashboard-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+  gap: 3rem;
+}
+
+.install-pwa-btn {
+  background: var(--accent-color);
+  color: var(--primary-bg);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  margin-left: 1rem;
+  transition: background 0.2s, color 0.2s;
+}
+.install-pwa-btn:hover {
+  background: var(--text-primary);
+  color: var(--accent-color);
+}
+
+/* 手機 header 右上角 */
+@media (max-width: 1024px) {
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .install-pwa-btn {
+    font-size: 0.95rem;
+    padding: 0.4rem 1rem;
+    margin-left: 0;
+  }
+}
+
+/* 桌面 dashboard header 右上角 */
+@media (min-width: 1025px) {
+  .dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #install-pwa-btn {
+    margin-left: 2rem;
+  }
+} 

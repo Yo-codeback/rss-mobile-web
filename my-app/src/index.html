@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>國家級警報</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e1e2e">
+    <link rel="icon" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+</head>
+<body>
+    <!-- 電腦版 Dashboard -->
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <div class="clock-container">
+                <div class="clock">
+                    <div class="time">00:00:00</div>
+                    <div class="date">2024年1月1日</div>
+                </div>
+            </div>
+            <div class="ticker-container">
+                <div class="ticker-wrapper">
+                    <div class="ticker-content"></div>
+                </div>
+            </div>
+            <button id="install-pwa-btn" style="display:none;" class="install-pwa-btn">安裝 App</button>
+        </div>
+        <div class="dashboard-content">
+            <div class="alerts-section">
+                <div class="section-header">
+                    <h2>最新警報</h2>
+                </div>
+                <div class="alert-list"></div>
+            </div>
+            <div class="stats-section">
+                <div class="section-header">
+                    <h2>警報統計</h2>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">🌋</div>
+                        <div class="stat-info">
+                            <div class="stat-value">0</div>
+                            <div class="stat-label">地震警報</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🌀</div>
+                        <div class="stat-info">
+                            <div class="stat-value">0</div>
+                            <div class="stat-label">颱風警報</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🌊</div>
+                        <div class="stat-info">
+                            <div class="stat-value">0</div>
+                            <div class="stat-label">海嘯警報</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 手機版 App -->
+    <div class="app-container">
+        <div class="header">
+            <h1>國家級警報</h1>
+            <button id="install-pwa-btn-mobile" style="display:none;" class="install-pwa-btn">安裝 App</button>
+        </div>
+        <div class="alert-list"></div>
+        <div class="alert-detail hidden">
+            <div class="detail-header">
+                <button class="back-button">←</button>
+                <h2>警報詳情</h2>
+            </div>
+            <div class="detail-content">
+                <div class="detail-alert">
+                    <h3></h3>
+                    <div class="detail-time"></div>
+                    <div class="detail-info">
+                        <p class="detail-text"></p>
+                        <p class="detail-area"></p>
+                        <p class="detail-sender"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="settings-page hidden">
+            <div class="detail-header">
+                <button class="settings-back-button">←</button>
+                <h2>設定</h2>
+            </div>
+            <div class="settings-content">
+                <div class="settings-group">
+                    <h3>通知設定</h3>
+                    <div class="setting-item">
+                        <span>地震警報</span>
+                        <label class="switch">
+                            <input type="checkbox" id="earthquake-notification" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <span>颱風警報</span>
+                        <label class="switch">
+                            <input type="checkbox" id="typhoon-notification" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <span>海嘯警報</span>
+                        <label class="switch">
+                            <input type="checkbox" id="tsunami-notification" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <h3>應用程式設定</h3>
+                    <div class="setting-item">
+                        <span>深色模式</span>
+                        <label class="switch">
+                            <input type="checkbox" id="dark-mode" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <span>自動更新</span>
+                        <label class="switch">
+                            <input type="checkbox" id="auto-update" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <span>CORS代理</span>
+                        <label class="switch">
+                            <input type="checkbox" id="cors-proxy">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <span>RSS Reader模式</span>
+                        <label class="switch">
+                            <input type="checkbox" id="rss-reader-mode">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-nav">
+            <div class="nav-item active" data-page="alerts">
+                <div class="nav-icon">📢</div>
+                <div class="nav-text">警報</div>
+            </div>
+            <div class="nav-item" data-page="settings">
+                <div class="nav-icon">⚙️</div>
+                <div class="nav-text">設定</div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
