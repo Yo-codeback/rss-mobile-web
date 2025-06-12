@@ -580,4 +580,48 @@ input:checked + .slider:before {
   margin: 0 auto;
   padding: 2.5rem 2rem;
   gap: 3rem;
+}
+
+.install-pwa-btn {
+  background: var(--accent-color);
+  color: var(--primary-bg);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  margin-left: 1rem;
+  transition: background 0.2s, color 0.2s;
+}
+.install-pwa-btn:hover {
+  background: var(--text-primary);
+  color: var(--accent-color);
+}
+
+/* 手機 header 右上角 */
+@media (max-width: 1024px) {
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .install-pwa-btn {
+    font-size: 0.95rem;
+    padding: 0.4rem 1rem;
+    margin-left: 0;
+  }
+}
+
+/* 桌面 dashboard header 右上角 */
+@media (min-width: 1025px) {
+  .dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #install-pwa-btn {
+    margin-left: 2rem;
+  }
 } 

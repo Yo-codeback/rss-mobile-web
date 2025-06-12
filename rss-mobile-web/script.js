@@ -352,7 +352,46 @@ async function initApp() {
     });
 }
 
+// PWA 安裝按鈕功能
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    // 顯示安裝按鈕（桌面和手機）
+    const btnDesktop = document.getElementById('install-pwa-btn');
+    const btnMobile = document.getElementById('install-pwa-btn-mobile');
+    if (btnDesktop) btnDesktop.style.display = '';
+    if (btnMobile) btnMobile.style.display = '';
+});
+
+function hidePwaBtn() {
+    const btnDesktop = document.getElementById('install-pwa-btn');
+    const btnMobile = document.getElementById('install-pwa-btn-mobile');
+    if (btnDesktop) btnDesktop.style.display = 'none';
+    if (btnMobile) btnMobile.style.display = 'none';
+}
+
+function setupPwaInstallBtn() {
+    const btnDesktop = document.getElementById('install-pwa-btn');
+    const btnMobile = document.getElementById('install-pwa-btn-mobile');
+    [btnDesktop, btnMobile].forEach(btn => {
+        if (btn) {
+            btn.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        hidePwaBtn();
+                    }
+                    deferredPrompt = null;
+                }
+            });
+        }
+    });
+}
+
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
+    setupPwaInstallBtn();
     initApp();
 }); 
