@@ -104,14 +104,17 @@ function updateStats(alerts) {
 async function fetchAlerts() {
     try {
         const useProxy = localStorage.getItem('cors-proxy') === 'true';
+        const useRssReader = localStorage.getItem('rss-reader-mode') === 'true';
         const proxy = 'https://cors-anywhere.herokuapp.com/';
         const url = 'https://cbs.tw/files/rssatomfeed.xml';
         const fetchUrl = useProxy ? proxy + url : url;
-        const response = await fetch(fetchUrl, {
-            headers: {
+        const fetchOptions = {};
+        if (useRssReader) {
+            fetchOptions.headers = {
                 'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml'
-            }
-        });
+            };
+        }
+        const response = await fetch(fetchUrl, fetchOptions);
         if (!response.ok) throw new Error('伺服器回應錯誤');
         const xmlText = await response.text();
         const parser = new DOMParser();
@@ -334,7 +337,8 @@ async function initApp() {
         'tsunami-notification': true,
         'dark-mode': true,
         'auto-update': true,
-        'cors-proxy': false
+        'cors-proxy': false,
+        'rss-reader-mode': false
     };
     Object.keys(settings).forEach(key => {
         const checkbox = document.getElementById(key);
@@ -342,13 +346,7 @@ async function initApp() {
             checkbox.checked = localStorage.getItem(key) !== 'false';
             checkbox.addEventListener('change', () => {
                 localStorage.setItem(key, checkbox.checked);
-                if (key === 'auto-update') {
-                    if (checkbox.checked) {
-                        initApp();
-                    }
-                }
-                if (key === 'cors-proxy') {
-                    // 立即重新抓取警報
+                if (key === 'auto-update' || key === 'cors-proxy' || key === 'rss-reader-mode') {
                     initApp();
                 }
             });
