@@ -5,10 +5,22 @@
     box-sizing: border-box;
 }
 
+:root {
+    --primary-bg: #1e1e2e;
+    --secondary-bg: #313244;
+    --accent-color: #89b4fa;
+    --text-primary: #cdd6f4;
+    --text-secondary: #a6adc8;
+    --alert-color: #f38ba8;
+    --success-color: #a6e3a1;
+    --warning-color: #fab387;
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: #1a1a2e;
-    color: #ffffff;
+    background-color: var(--primary-bg);
+    color: var(--text-primary);
     line-height: 1.6;
 }
 
@@ -22,7 +34,7 @@ body {
 
 /* 頂部標題欄 */
 .header {
-    background-color: #16213e;
+    background-color: var(--secondary-bg);
     padding: 1rem;
     text-align: center;
     position: sticky;
@@ -34,6 +46,7 @@ body {
 .header h1 {
     font-size: 1.5rem;
     font-weight: 600;
+    color: var(--accent-color);
 }
 
 /* 警報列表 */
@@ -44,18 +57,21 @@ body {
 }
 
 .alert-item {
-    background-color: #0f3460;
-    border-radius: 10px;
+    background-color: var(--secondary-bg);
+    border-radius: 12px;
     padding: 1rem;
     margin-bottom: 1rem;
     display: flex;
     gap: 1rem;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
 }
 
 .alert-item:hover {
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-color: var(--accent-color);
 }
 
 .alert-icon {
@@ -70,12 +86,12 @@ body {
 
 .alert-content h3 {
     margin-bottom: 0.5rem;
-    color: #e94560;
+    color: var(--alert-color);
 }
 
 .alert-time {
     font-size: 0.9rem;
-    color: #8b8b8b;
+    color: var(--text-secondary);
     margin-bottom: 0.5rem;
 }
 
@@ -83,35 +99,38 @@ body {
     font-size: 0.95rem;
     margin-bottom: 0.5rem;
     line-height: 1.4;
+    color: var(--text-primary);
 }
 
 .alert-area, .alert-sender {
     font-size: 0.85rem;
-    color: #8b8b8b;
+    color: var(--text-secondary);
     margin-bottom: 0.25rem;
 }
 
 /* 底部導航欄 */
 .bottom-nav {
-    background-color: #16213e;
+    background-color: var(--secondary-bg);
     display: flex;
     justify-content: space-around;
     padding: 1rem;
     position: sticky;
     bottom: 0;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
+    border-top: 1px solid var(--border-color);
 }
 
 .nav-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #8b8b8b;
+    color: var(--text-secondary);
     cursor: pointer;
+    transition: color 0.3s ease;
 }
 
 .nav-item.active {
-    color: #e94560;
+    color: var(--accent-color);
 }
 
 .nav-icon {
@@ -130,7 +149,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #1a1a2e;
+    background-color: var(--primary-bg);
     z-index: 1000;
 }
 
@@ -139,19 +158,25 @@ body {
 }
 
 .detail-header {
-    background-color: #16213e;
+    background-color: var(--secondary-bg);
     padding: 1rem;
     display: flex;
     align-items: center;
     gap: 1rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.back-button {
+.back-button, .settings-back-button {
     background: none;
     border: none;
-    color: #ffffff;
+    color: var(--accent-color);
     font-size: 1.5rem;
     cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.back-button:hover, .settings-back-button:hover {
+    color: var(--text-primary);
 }
 
 .detail-content {
@@ -159,24 +184,26 @@ body {
 }
 
 .detail-alert h3 {
-    color: #e94560;
+    color: var(--alert-color);
     margin-bottom: 1rem;
 }
 
 .detail-time {
-    color: #8b8b8b;
+    color: var(--text-secondary);
     margin-bottom: 1rem;
 }
 
 .detail-info {
-    background-color: #0f3460;
+    background-color: var(--secondary-bg);
     padding: 1rem;
-    border-radius: 10px;
+    border-radius: 12px;
     margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
 }
 
 .detail-info p {
     margin-bottom: 0.5rem;
+    color: var(--text-primary);
 }
 
 /* 設定頁面樣式 */
@@ -185,14 +212,15 @@ body {
 }
 
 .settings-group {
-    background-color: #0f3460;
-    border-radius: 10px;
+    background-color: var(--secondary-bg);
+    border-radius: 12px;
     padding: 1rem;
     margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
 }
 
 .settings-group h3 {
-    color: #e94560;
+    color: var(--accent-color);
     margin-bottom: 1rem;
     font-size: 1.1rem;
 }
@@ -202,11 +230,15 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0.8rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .setting-item:last-child {
     border-bottom: none;
+}
+
+.setting-item span {
+    color: var(--text-primary);
 }
 
 /* 開關按鈕樣式 */
@@ -230,7 +262,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: var(--text-secondary);
     transition: .4s;
     border-radius: 24px;
 }
@@ -248,7 +280,7 @@ body {
 }
 
 input:checked + .slider {
-    background-color: #e94560;
+    background-color: var(--accent-color);
 }
 
 input:checked + .slider:before {
@@ -261,7 +293,7 @@ input:checked + .slider:before {
     justify-content: center;
     align-items: center;
     padding: 2rem;
-    color: #8b8b8b;
+    color: var(--text-secondary);
 }
 
 .loading::after {
@@ -277,11 +309,11 @@ input:checked + .slider:before {
 
 /* 錯誤提示 */
 .error-message {
-    background-color: #e94560;
-    color: white;
+    background-color: var(--alert-color);
+    color: var(--primary-bg);
     padding: 1rem;
     margin: 1rem;
-    border-radius: 10px;
+    border-radius: 12px;
     text-align: center;
 }
 
