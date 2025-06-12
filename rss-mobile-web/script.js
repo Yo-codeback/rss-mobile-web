@@ -150,12 +150,11 @@ async function fetchAlerts() {
 
 // 渲染警報列表
 function renderAlerts(alerts) {
+    if (!Array.isArray(alerts)) alerts = [];
     const alertList = document.querySelector('.alert-list');
     alertList.innerHTML = '';
-    
     // 只顯示前五個警報
     const recentAlerts = alerts.slice(0, 5);
-    
     recentAlerts.forEach(alert => {
         const alertItem = document.createElement('div');
         alertItem.className = 'alert-item';
@@ -169,11 +168,9 @@ function renderAlerts(alerts) {
                 <div class="alert-sender">發送者：${alert.sender}</div>
             </div>
         `;
-        
         alertItem.addEventListener('click', () => {
             showAlertDetail(alert);
         });
-        
         alertList.appendChild(alertItem);
     });
 }
