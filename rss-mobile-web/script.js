@@ -3,6 +3,7 @@ const alertItems = document.querySelectorAll('.alert-item');
 const alertDetail = document.querySelector('.alert-detail');
 const settingsPage = document.querySelector('.settings-page');
 const backButton = document.querySelector('.back-button');
+const settingsBackButton = document.querySelector('.settings-back-button');
 const navItems = document.querySelectorAll('.nav-item');
 const settingsSwitches = document.querySelectorAll('.switch input');
 
@@ -92,12 +93,21 @@ alertItems.forEach(item => {
 
 // 返回按鈕功能
 backButton.addEventListener('click', () => {
-    if (currentPage === 'settings') {
-        settingsPage.classList.add('hidden');
-        currentPage = 'alerts';
-    } else {
-        alertDetail.classList.add('hidden');
-    }
+    alertDetail.classList.add('hidden');
+});
+
+// 設定頁面返回按鈕功能
+settingsBackButton.addEventListener('click', () => {
+    settingsPage.classList.add('hidden');
+    currentPage = 'alerts';
+    // 更新底部導航欄狀態
+    navItems.forEach(nav => {
+        if (nav.querySelector('.nav-text').textContent === '警報') {
+            nav.classList.add('active');
+        } else {
+            nav.classList.remove('active');
+        }
+    });
 });
 
 // 底部導航切換
