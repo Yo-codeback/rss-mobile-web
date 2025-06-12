@@ -371,4 +371,183 @@ input:checked + .slider:before {
     .alert-summary {
         font-size: 0.9rem;
     }
+}
+
+/* 儀表板佈局 */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: var(--secondary-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+
+.clock-container {
+    display: flex;
+    align-items: center;
+}
+
+.clock {
+    text-align: center;
+}
+
+.clock .time {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.clock .date {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.ticker-container {
+    flex: 1;
+    margin: 0 2rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.ticker-wrapper {
+    width: 100%;
+    overflow: hidden;
+}
+
+.ticker-content {
+    display: inline-block;
+    white-space: nowrap;
+    padding-left: 100%;
+    animation: ticker 30s linear infinite;
+}
+
+@keyframes ticker {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.dashboard-content {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    height: calc(100vh - 180px);
+}
+
+.alerts-section {
+    flex: 2;
+    min-width: 0;
+}
+
+.stats-section {
+    flex: 1;
+    min-width: 300px;
+}
+
+.section-header {
+    margin-bottom: 1rem;
+}
+
+.section-header h2 {
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.stat-card {
+    background: var(--secondary-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.stat-icon {
+    font-size: 2rem;
+}
+
+.stat-info {
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* 響應式設計 */
+@media (max-width: 1024px) {
+    .dashboard-content {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .stats-section {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-header {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .clock-container {
+        margin-bottom: 1rem;
+    }
+
+    .ticker-container {
+        margin: 0;
+        width: 100%;
+    }
+
+    .dashboard-content {
+        padding: 1rem;
+    }
+
+    .clock .time {
+        font-size: 2rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 隱藏移動版底部導航欄在桌面版 */
+@media (min-width: 769px) {
+    .bottom-nav {
+        display: none;
+    }
 } 

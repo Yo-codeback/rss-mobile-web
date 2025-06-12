@@ -12,14 +12,80 @@ let currentPage = 'alerts';
 
 // 警報類型圖標映射
 const alertIcons = {
-    '地震速報': '🌋',
-    '土石流': '⛰️',
-    '疏散避難': '🏃',
-    '海嘯警報': '🌊',
-    '颱風警報': '🌀',
-    '豪雨特報': '🌧️',
+    '地震': '🌋',
+    '颱風': '🌀',
+    '海嘯': '🌊',
     'default': '⚠️'
 };
+
+// 更新時鐘
+function updateClock() {
+    const now = new Date();
+    const timeElement = document.querySelector('.clock .time');
+    const dateElement = document.querySelector('.clock .date');
+    
+    // 格式化時間
+    const time = now.toLocaleTimeString('zh-TW', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    });
+    
+    // 格式化日期
+    const date = now.toLocaleDateString('zh-TW', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        weekday: 'long'
+    });
+    
+    timeElement.textContent = time;
+    dateElement.textContent = date;
+}
+
+// 更新跑馬燈
+function updateTicker(alerts) {
+    const tickerContent = document.querySelector('.ticker-content');
+    if (!alerts || alerts.length === 0) {
+        tickerContent.textContent = '目前沒有新的警報';
+        return;
+    }
+
+    // 將警報轉換為跑馬燈文字
+    const tickerText = alerts.map(alert => {
+        const icon = alertIcons[alert.type] || alertIcons.default;
+        return `${icon} ${alert.title} | ${alert.time} | ${alert.area}`;
+    }).join(' | ');
+
+    // 重複文字以確保連續滾動
+    tickerContent.textContent = `${tickerText} | ${tickerText}`;
+}
+
+// 更新統計數據
+function updateStats(alerts) {
+    const stats = {
+        '地震': 0,
+        '颱風': 0,
+        '海嘯': 0
+    };
+
+    alerts.forEach(alert => {
+        if (stats.hasOwnProperty(alert.type)) {
+            stats[alert.type]++;
+        }
+    });
+
+    // 更新統計卡片
+    Object.entries(stats).forEach(([type, count]) => {
+        const statValue = document.querySelector(`.stat-card:nth-child(${
+            type === '地震' ? 1 : type === '颱風' ? 2 : 3
+        }) .stat-value`);
+        if (statValue) {
+            statValue.textContent = count;
+        }
+    });
+}
 
 // 獲取警報數據
 async function fetchAlerts() {
@@ -28,60 +94,90 @@ async function fetchAlerts() {
         const xmlText = await response.text();
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
-        const entries = xmlDoc.getElementsByTagName('entry');
         
-        // 只取前五個警報
-        const alerts = Array.from(entries).slice(0, 5).map(entry => {
+        const entries = xmlDoc.getElementsByTagName('entry');
+        const alerts = [];
+        
+        for (let entry of entries) {
             const title = entry.getElementsByTagName('title')[0].textContent;
-            const sent = entry.getElementsByTagName('sent')[0].textContent;
-            const text = entry.getElementsByTagName('text')[0].textContent;
+            const time = entry.getElementsByTagName('published')[0].textContent;
+            const text = entry.getElementsByTagName('content')[0].textContent;
             const link = entry.getElementsByTagName('link')[0].getAttribute('href');
-            const area = entry.getElementsByTagName('areaDesc')[0]?.textContent || '未指定區域';
-            const sender = entry.getElementsByTagName('sender')[0].getElementsByTagName('value')[0].textContent;
             
-            return {
+            // 解析警報類型
+            let type = 'default';
+            if (title.includes('地震')) type = '地震';
+            else if (title.includes('颱風')) type = '颱風';
+            else if (title.includes('海嘯')) type = '海嘯';
+            
+            // 解析地區和發送者
+            const areaMatch = text.match(/地區：([^<]+)/);
+            const senderMatch = text.match(/發送者：([^<]+)/);
+            
+            alerts.push({
                 title,
-                sent: new Date(sent).toLocaleString('zh-TW'),
+                time: new Date(time).toLocaleString('zh-TW'),
                 text,
                 link,
-                area,
-                sender,
-                icon: alertIcons[title] || alertIcons.default
-            };
-        });
+                type,
+                area: areaMatch ? areaMatch[1] : '未知地區',
+                sender: senderMatch ? senderMatch[1] : '未知發送者'
+            });
+        }
         
         return alerts;
     } catch (error) {
-        console.error('獲取警報數據失敗:', error);
+        console.error('獲取警報失敗:', error);
         return [];
     }
 }
 
 // 渲染警報列表
-async function renderAlerts() {
+function renderAlerts(alerts) {
     const alertList = document.querySelector('.alert-list');
-    const alerts = await fetchAlerts();
+    alertList.innerHTML = '';
     
-    alertList.innerHTML = alerts.map(alert => `
-        <div class="alert-item" data-link="${alert.link}">
-            <div class="alert-icon">${alert.icon}</div>
+    // 只顯示前五個警報
+    const recentAlerts = alerts.slice(0, 5);
+    
+    recentAlerts.forEach(alert => {
+        const alertItem = document.createElement('div');
+        alertItem.className = 'alert-item';
+        alertItem.innerHTML = `
+            <div class="alert-icon">${alertIcons[alert.type] || alertIcons.default}</div>
             <div class="alert-content">
                 <h3>${alert.title}</h3>
-                <p class="alert-time">${alert.sent}</p>
-                <p class="alert-summary">${alert.text}</p>
-                <p class="alert-area">區域：${alert.area}</p>
-                <p class="alert-sender">發布單位：${alert.sender}</p>
+                <div class="alert-time">${alert.time}</div>
+                <div class="alert-summary">${alert.text}</div>
+                <div class="alert-area">地區：${alert.area}</div>
+                <div class="alert-sender">發送者：${alert.sender}</div>
             </div>
-        </div>
-    `).join('');
-
-    // 重新綁定事件監聽器
-    document.querySelectorAll('.alert-item').forEach(item => {
-        item.addEventListener('click', () => {
-            const link = item.dataset.link;
-            window.open(link, '_blank');
+        `;
+        
+        alertItem.addEventListener('click', () => {
+            showAlertDetail(alert);
         });
+        
+        alertList.appendChild(alertItem);
     });
+}
+
+// 顯示警報詳情
+function showAlertDetail(alert) {
+    const detailPage = document.querySelector('.alert-detail');
+    const detailTitle = detailPage.querySelector('h3');
+    const detailTime = detailPage.querySelector('.detail-time');
+    const detailText = detailPage.querySelector('.detail-text');
+    const detailArea = detailPage.querySelector('.detail-area');
+    const detailSender = detailPage.querySelector('.detail-sender');
+    
+    detailTitle.textContent = alert.title;
+    detailTime.textContent = alert.time;
+    detailText.textContent = alert.text;
+    detailArea.textContent = `地區：${alert.area}`;
+    detailSender.textContent = `發送者：${alert.sender}`;
+    
+    detailPage.classList.remove('hidden');
 }
 
 // 點擊警報項目顯示詳情
