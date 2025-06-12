@@ -107,7 +107,11 @@ async function fetchAlerts() {
         const proxy = 'https://cors-anywhere.herokuapp.com/';
         const url = 'https://cbs.tw/files/rssatomfeed.xml';
         const fetchUrl = useProxy ? proxy + url : url;
-        const response = await fetch(fetchUrl);
+        const response = await fetch(fetchUrl, {
+            headers: {
+                'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml'
+            }
+        });
         if (!response.ok) throw new Error('伺服器回應錯誤');
         const xmlText = await response.text();
         const parser = new DOMParser();

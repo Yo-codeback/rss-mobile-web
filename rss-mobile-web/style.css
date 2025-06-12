@@ -33,6 +33,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    padding-bottom: 80px; /* 預留底部導航高度，避免內容被遮住 */
 }
 
 /* 頂部標題欄 */
@@ -119,14 +120,15 @@ body {
 
 /* 底部導航欄 */
 .bottom-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
     background: var(--secondary-bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     display: flex;
     justify-content: space-around;
     padding: 1rem;
-    position: sticky;
-    bottom: 0;
     box-shadow: var(--glass-shadow);
     border-top: var(--glass-border);
 }
