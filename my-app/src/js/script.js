@@ -397,3 +397,30 @@ document.addEventListener('DOMContentLoaded', () => {
     setupPwaInstallBtn();
     initApp();
 }); 
+
+// 檢查 Capacitor 是否可用
+const isCapacitor = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
+
+let lastAlertTitle = null;
+
+async function checkAndNotify() {
+    const alerts = await fetchAlerts();
+    if (alerts.length && alerts[0].title !== lastAlertTitle) {
+        if (isCapacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications) {
+            window.Capacitor.Plugins.LocalNotifications.schedule({
+                notifications: [
+                    {
+                        title: alerts[0].title,
+                        body: alerts[0].text || alerts[0].summary || '',
+                        id: 1,
+                        schedule: { at: new Date(Date.now() + 1000) }
+                    }
+                ]
+            });
+        }
+        lastAlertTitle = alerts[0].title;
+    }
+}
+
+// 每分鐘自動檢查
+setInterval(checkAndNotify, 60000);
